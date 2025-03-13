@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Noticias</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #0073e6;
+        }
+
+        /* Estilos para cada noticia */
+        .noticia {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .noticia:hover {
+            transform: scale(1.02);
+        }
+
+        .noticia h3 a {
+            text-decoration: none;
+            color: #0073e6;
+            transition: color 0.3s;
+        }
+
+        .noticia h3 a:hover {
+            color: #005bb5;
+        }
+
+        .noticia p {
+            margin: 5px 0;
+        }
+
+        .noticia img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        /* Mensaje cuando no hay noticias */
+        .no-noticias {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Noticias Publicadas</h2>
+        {% if noticias %}
+            {% for noticia in noticias %}
+                <div class="noticia">
+                    <h3>
+                        <a href="{% url 'detalle_noticia' noticia.id %}">{{ noticia.titulo }}</a>
+                    </h3>
+                    <p><strong>Fecha:</strong> {{ noticia.fecha_publicacion }}</p>
+                    <p>{{ noticia.resumen }}</p>
+                    {% if noticia.foto %}
+                        <a href="{% url 'detalle_noticia' noticia.id %}">
+                            <img src="{{ noticia.foto.url }}" alt="Imagen de {{ noticia.titulo }}">
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-noticias">No hay noticias publicadas.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
